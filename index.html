@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Aqsa G 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+html,body{overflow-x:hidden}
+
+body{
+    min-height:100vh;
+    background:#0b1220;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:20px 12px;
+    color:#fff;
+}
+
+/* Particles */
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+}
+.particle{
+    position:absolute;
+    width:3px;height:3px;
+    background:white;
+    opacity:.3;border-radius:50%;
+    animation:float 10s linear infinite;
+}
+@keyframes float{
+    from{transform:translateY(100vh)}
+    to{transform:translateY(-10vh)}
+}
+
+/* Card */
+.card{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:900px;
+    padding:clamp(16px,4vw,30px);
+    text-align:center;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    margin-top:20px;
+}
+
+h1{font-size:clamp(22px,6vw,36px)}
+h2{color:#cbd5e1;margin:10px 0 20px;font-size:clamp(14px,4vw,18px)}
+
+#text{
+    font-size:clamp(14px,3.5vw,18px);
+    line-height:1.8;
+    min-height:90px;
+    margin-bottom:18px;
+}
+
+/* Buttons */
+button{
+    padding:8px 14px;
+    border-radius:30px;
+    border:2px solid wheat;
+    cursor:pointer;
+    background:transparent;
+    color:#fff;
+    font-weight:600;
+    margin:5px;
+    font-size:14px;
+}
+
+/* Slideshow */
+.slideshow{
+    width:100%;
+    max-width:360px;
+    height:clamp(240px,70vw,420px);
+    margin:20px auto;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+}
+.slideshow img{
+    position:absolute;
+    inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity .6s;
+}
+.slideshow img.active{opacity:1}
+
+/* Video */
+.video-container{
+    width:100%;
+    max-width:360px;
+    margin:18px auto;
+}
+.video-container video{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/14;
+    object-fit:cover;
+    border-radius:14px;
+    background:#000;
+}
+.video-buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:8px;
+}
+
+footer{margin-top:12px;font-size:13px;color:#aaa}
+
+/* Tablet */
+@media (min-width:600px){
+    .slideshow,.video-container{max-width:420px}
+}
+
+/* Desktop */
+@media (min-width:900px){
+    body{align-items:center}
+    .card{padding:30px 40px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="particles"></div>
+
+<div class="card">
+    <h1>Aqsa G</h1>
+    <h2>Many Many Happy returns of the day</h2>
+
+    <div class="slideshow" id="imageSlideshow">
+        <img src="images/img (1).jpg" class="active">
+        <img src="images/img (2).jpg">
+        <img src="images/img (3).jpg">
+        <img src="images/img (4).jpg">
+        <img src="images/img (5).jpg">
+        <img src="images/img (6).jpg">
+        <img src="images/img (7).jpg">
+        <img src="images/img (8).jpg">
+        <img src="images/img (9).jpg">
+        <img src="images/img (10).jpg">
+    </div>
+
+    <div class="video-container">
+        <video id="videoPlayer" controls playsinline></video>
+        <div class="video-buttons">
+            <button onclick="prevVideo()">Previous</button>
+            <button onclick="nextVideo()">Next</button>
+        </div>
+    </div>
+
+    <div id="text"></div>
+    <button id="msgBtn">Click Me</button>
+
+    <footer>Made with Love 💖 for AQSA</footer>
+</div>
+
+<script>
+/* Messages */
+const messages = [
+"Assalamualaikum. 🤝",
+"Agar aap ye website dekh rahi ha to is ka matlab ha k ma is duniya ma nahi hu. 😔",
+"Ha ha mazak tha bhai mazak. 😂",
+"Happy Birthday! 🎂✨",
+"Allah aap ko lambi aur khushhaal zindagi ata farmaye. 🤲",
+"Aap ki har jaiz dua qubool ho. 💖",
+"Allah aap ko sehat aur kamyabi naseeb kare. 🌹",
+"Har naya din aap ke liye khushiyan lekar aaye. ✨",
+"Aap hamesha muskurati rahain. 😊",
+"Allah aap ko har gham se mehfooz rakhe. 🤲",
+"Aap ke sapne poore hon. 🌸",
+"Aap ki zindagi barkat aur sukoon se bhari rahe. 💕",
+"Allah aap ko apni hifazat mein rakhe. 🤲",
+"Aaj ka din khoob enjoy kijiye. 🎉",
+"Happy Birthday once again! ❤️"
+];
+
+
+let index=0,isTyping=false;
+const text=document.getElementById("text");
+const btn=document.getElementById("msgBtn");
+
+btn.addEventListener("click",()=>{
+ if(isTyping) return;
+ if(index>=messages.length) index=0;
+
+ text.innerHTML="";
+ isTyping=true;
+ let char=0,msg=messages[index];
+
+ function type(){
+  if(char<msg.length){
+   text.innerHTML+=msg.charAt(char++);
+   setTimeout(type,30);
+  }else isTyping=false;
+ }
+ type();
+ index++;
+ btn.innerText="Next";
+});
+
+/* Slideshow */
+let imgIndex=0;
+const imgs=document.querySelectorAll("#imageSlideshow img");
+setInterval(()=>{
+ imgs.forEach(i=>i.classList.remove("active"));
+ imgs[imgIndex].classList.add("active");
+ imgIndex=(imgIndex+1)%imgs.length;
+},3000);
+
+/* Videos */
+const videoList=[
+"hbd/1.mp4","hbd/2.mp4","hbd/3.mp4",
+"hbd/4.mp4","hbd/5.mp4","hbd/6.mp4",
+"hbd/7.mp4","hbd/8.mp4","hbd/9.mp4",
+"hbd/10.mp4","hbd/11.mp4"
+];
+
+let currentVideo=0;
+const player=document.getElementById("videoPlayer");
+
+function loadVideo(i){
+ player.src=videoList[i];
+ player.play();
+}
+loadVideo(currentVideo);
+
+function nextVideo(){
+ currentVideo=(currentVideo+1)%videoList.length;
+ loadVideo(currentVideo);
+}
+function prevVideo(){
+ currentVideo=(currentVideo-1+videoList.length)%videoList.length;
+ loadVideo(currentVideo);
+}
+
+/* Particles */
+setInterval(()=>{
+ const p=document.createElement("div");
+ p.classList.add("particle");
+ p.style.left=Math.random()*100+"vw";
+ document.getElementById("particles").appendChild(p);
+ setTimeout(()=>p.remove(),12000);
+},400);
+</script>
+
+</body>
+</html>
+
+
+
+    <!-- mano48964 ye saneha ki id ha tiktok ki -->
